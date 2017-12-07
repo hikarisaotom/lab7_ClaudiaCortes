@@ -5,7 +5,10 @@
  */
 package lab7_claudiacortes;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JOptionPane;
 
@@ -66,6 +69,9 @@ public class Principal extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btn_orden = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
+        jPanel4 = new javax.swing.JPanel();
+        jButton4 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
 
         jLabel9.setText("Cajero: ");
 
@@ -359,6 +365,43 @@ public class Principal extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Ventas", jPanel3);
 
+        jButton4.setText("Abrir");
+        jButton4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton4MouseClicked(evt);
+            }
+        });
+
+        jButton5.setText("Guardar");
+        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton5MouseClicked(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(287, 287, 287)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(354, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jButton4)
+                .addGap(50, 50, 50)
+                .addComponent(jButton5)
+                .addContainerGap(280, Short.MAX_VALUE))
+        );
+
+        jTabbedPane1.addTab("Guardar  y abrir", jPanel4);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -385,6 +428,7 @@ public class Principal extends javax.swing.JFrame {
             double Precio = (double) js_Precio.getValue();
             int Tiempo = (int) js_Tiempo.getValue();
             Productos P = new Productos(Nombrep, Precio, Tiempo);
+            P.setTiempo_Procesamiento(Tiempo);
             DefaultComboBoxModel Modelo = (DefaultComboBoxModel) jc_productos.getModel();
             Modelo.addElement(P);
             Productos.add(P);
@@ -393,7 +437,8 @@ public class Principal extends javax.swing.JFrame {
             tf_nombreproductos.setText("");
             js_Precio.setValue("");
             js_Tiempo.setValue("");
-            
+            Productos.add(P);
+
         } catch (Exception e) {
 
         }
@@ -411,6 +456,9 @@ public class Principal extends javax.swing.JFrame {
             Id++;
              tf_nombreCajero.setText("");
 
+        Cajeros.add(V);
+
+int Id=55;
         } catch (Exception e) {
 
         }
@@ -445,42 +493,60 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_nombreClienteMouseClicked
 
     private void btn_ordenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ordenMouseClicked
-        try{
+        try {
             OrdenActual.setOrdenes(Productos_Orden);
-        OrdenActual.setVendedor(((Cajero) jc_Cajero.getSelectedItem()));
-        OrdenActual.setComprador(Cliente_Actual);
-      //  Cliente_Actual.setOrden(OrdenActual);
-        System.out.println("LA ORDEN ES");
-        System.out.println("ORDEN ACTUAL" + OrdenActual);
-        JOptionPane.showMessageDialog(this, "Cargando Productos porfavor Espere");
-        ///((Cajero) jc_Cajero.getSelectedItem()).getHT().setAvanzar(true);
-          ((Cajero) jc_Cajero.getSelectedItem()).getHT().setVive(true);
-        ((Cajero) jc_Cajero.getSelectedItem()).setOrden(OrdenActual);
-        ((Cajero) jc_Cajero.getSelectedItem()).getHT().setOrden(OrdenActual);
-        System.out.println("EL TAMANO"+((Cajero) jc_Cajero.getSelectedItem()).getOrdenes().size());
-    
+            OrdenActual.setVendedor(((Cajero) jc_Cajero.getSelectedItem()));
+            OrdenActual.setComprador(Cliente_Actual);
+            //  Cliente_Actual.setOrden(OrdenActual);
+            System.out.println("LA ORDEN ES");
+            System.out.println("ORDEN ACTUAL" + OrdenActual);
+            JOptionPane.showMessageDialog(this, "Cargando Productos porfavor Espere");
+            ///((Cajero) jc_Cajero.getSelectedItem()).getHT().setAvanzar(true);
+            ((Cajero) jc_Cajero.getSelectedItem()).getHT().setVive(true);
+            ((Cajero) jc_Cajero.getSelectedItem()).setOrden(OrdenActual);
+            ((Cajero) jc_Cajero.getSelectedItem()).getHT().setOrden(OrdenActual);
+            System.out.println("EL TAMANO" + ((Cajero) jc_Cajero.getSelectedItem()).getOrdenes().size());
             //((Cajero) jc_Cajero.getSelectedItem()).getHT().start();
-              HT=new HiloTabla(true,true,((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Tablita,
-         ((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Procesando);
-              HT.setOrden(OrdenActual);
-          HT.start();
-        System.out.println("LAS ORDENES ACTIALES");
-        System.out.println( Productos_Orden);
+            HT = new HiloTabla(true, true, ((Cajero) jc_Cajero.getSelectedItem()).getVentana().jt_Tablita,
+                    ((Cajero) jc_Cajero.getSelectedItem()).getVentana().jt_Procesando);
+            HT.setOrden(OrdenActual);
+            HT.start();
+            System.out.println("LAS ORDENES ACTIALES");
+            System.out.println(Productos_Orden);
+            ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_NombreCajero.setText(OrdenActual.getVendedor().getNombre());
+            ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_Cliente.setText(OrdenActual.getComprador().getNombre());
+            Productos_Orden = new ArrayList();
+            Ordenes.add(OrdenActual);
+        } catch (Exception e) {
 
-        ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_NombreCajero.setText(OrdenActual.getVendedor().getNombre());
-        ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_Cliente.setText(OrdenActual.getComprador().getNombre());
-        Productos_Orden = new ArrayList();
-        }catch(Exception e){
-            
         }
-        // jd_Ventas.show(true);
-//      jd_Ventas.pack();
-        //  HT=new HiloTabla(true,true,jt_Tablita,jt_Procesando);
-        // HT=new HiloTabla(true,true,((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Tablita,
-        //   ((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Procesando);
-        //  HT.start();
 
     }//GEN-LAST:event_btn_ordenMouseClicked
+
+    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+        Guardar_Abrir CYG= new Guardar_Abrir();
+        CYG.setC(Clientes);
+        CYG.setCa(Cajeros);
+        CYG.setO(Ordenes);
+        CYG.setP(Productos);
+        try {
+            CYG.EscribirArchivo();
+        } catch (IOException ex) {
+            Logger.getLogger(Principal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5MouseClicked
+
+    private void jButton4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton4MouseClicked
+       Guardar_Abrir CYG= new Guardar_Abrir();
+       CYG.CargarArchivo();
+     DefaultComboBoxModel Modelo = new DefaultComboBoxModel();
+        for (int i = 0; i <CYG.getP().size(); i++) {
+     Modelo.addElement(CYG.getP().get(i));
+     
+        }
+       jc_productos.setModel(Modelo);
+       JOptionPane.showMessageDialog(this,"Archivos Guardado");
+    }//GEN-LAST:event_jButton4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -523,6 +589,8 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -537,6 +605,7 @@ public class Principal extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JComboBox<String> jc_Cajero;
@@ -562,5 +631,6 @@ int Id=55;
 Orden OrdenActual=new Orden();
 HiloTabla HT;
 Cliente Cliente_Actual;
+
 
 }

@@ -77,7 +77,7 @@ JTextField Texto;
                     for (int i = 0; i < Orden.getOrdenes().size(); i++) {
                         Texto.setText(Orden.getOrdenes().get(i).getNombre());
                         try {
-                            Thread.sleep(Tiempo*1000);//PONERLE SIEMPRE EL SLEEP por si si sucede cualquier cambio que sea necesario.
+                            Thread.sleep(Tiempo*10000);//PONERLE SIEMPRE EL SLEEP por si si sucede cualquier cambio que sea necesario.
                             Object[] newrow = {Orden.getOrdenes().get(i), Orden.getComprador(), Orden.getOrdenes().get(i).getTiempo_Procesamiento()
                             };
                             DefaultTableModel Modelo = (DefaultTableModel) Tabla.getModel();
