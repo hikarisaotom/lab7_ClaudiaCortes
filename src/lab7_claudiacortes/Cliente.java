@@ -56,7 +56,7 @@ public class Cliente implements Serializable{
 
     @Override
     public String toString() {
-        return "Cliente{" + "Nombre=" + Nombre + ", edad=" + edad + ", orden=" + orden + '}';
+        return Nombre ;
     }
     
 }

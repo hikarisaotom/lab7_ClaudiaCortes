@@ -433,6 +433,7 @@ public class Principal extends javax.swing.JFrame {
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
         Productos_Orden.add(((Productos)jc_productos.getSelectedItem()));
+        JOptionPane.showMessageDialog(this,"Agregado");
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jc_productosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jc_productosMouseClicked
@@ -444,21 +445,34 @@ public class Principal extends javax.swing.JFrame {
     }//GEN-LAST:event_tf_nombreClienteMouseClicked
 
     private void btn_ordenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_ordenMouseClicked
-        OrdenActual.setOrdenes(Productos_Orden);
+        try{
+            OrdenActual.setOrdenes(Productos_Orden);
         OrdenActual.setVendedor(((Cajero) jc_Cajero.getSelectedItem()));
         OrdenActual.setComprador(Cliente_Actual);
-         
+      //  Cliente_Actual.setOrden(OrdenActual);
         System.out.println("LA ORDEN ES");
         System.out.println("ORDEN ACTUAL" + OrdenActual);
-
-        JOptionPane.showMessageDialog(jd_Ventas, "Cargando Productos porfavor Espere");
-((Cajero) jc_Cajero.getSelectedItem()).getHT().setAvanzar(true);
+        JOptionPane.showMessageDialog(this, "Cargando Productos porfavor Espere");
+        ///((Cajero) jc_Cajero.getSelectedItem()).getHT().setAvanzar(true);
+          ((Cajero) jc_Cajero.getSelectedItem()).getHT().setVive(true);
+        ((Cajero) jc_Cajero.getSelectedItem()).setOrden(OrdenActual);
         ((Cajero) jc_Cajero.getSelectedItem()).getHT().setOrden(OrdenActual);
-        ((Cajero) jc_Cajero.getSelectedItem()).getHT().start();
+        System.out.println("EL TAMANO"+((Cajero) jc_Cajero.getSelectedItem()).getOrdenes().size());
+    
+            //((Cajero) jc_Cajero.getSelectedItem()).getHT().start();
+              HT=new HiloTabla(true,true,((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Tablita,
+         ((Cajero)jc_Cajero.getSelectedItem()).getVentana().jt_Procesando);
+              HT.setOrden(OrdenActual);
+          HT.start();
+        System.out.println("LAS ORDENES ACTIALES");
+        System.out.println( Productos_Orden);
 
         ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_NombreCajero.setText(OrdenActual.getVendedor().getNombre());
         ((Cajero) jc_Cajero.getSelectedItem()).getVentana().lbl_Cliente.setText(OrdenActual.getComprador().getNombre());
         Productos_Orden = new ArrayList();
+        }catch(Exception e){
+            
+        }
         // jd_Ventas.show(true);
 //      jd_Ventas.pack();
         //  HT=new HiloTabla(true,true,jt_Tablita,jt_Procesando);

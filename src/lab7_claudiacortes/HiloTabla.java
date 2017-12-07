@@ -80,7 +80,6 @@ JTextField Texto;
                             Thread.sleep(Tiempo*1000);//PONERLE SIEMPRE EL SLEEP por si si sucede cualquier cambio que sea necesario.
                             Object[] newrow = {Orden.getOrdenes().get(i), Orden.getComprador(), Orden.getOrdenes().get(i).getTiempo_Procesamiento()
                             };
-                          
                             DefaultTableModel Modelo = (DefaultTableModel) Tabla.getModel();
                             Modelo.addRow(newrow);
                             Tabla.setModel(Modelo);

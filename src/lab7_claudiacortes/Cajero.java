@@ -30,9 +30,12 @@ HiloTabla HT=new HiloTabla(true,true,Ventana.jt_Tablita,Ventana.jt_Procesando);
         this.Nombre = Nombre;
         this.Id = Id;
        Ventana.show(true);
-    
+    Ventana.lbl_NombreCajero.setText(Nombre);
+    //HT.start();
     }
-
+public void setOrden(Orden o){
+    Ordenes.add(o);
+}
     public HiloTabla getHT() {
         return HT;
     }
@@ -48,7 +51,10 @@ HiloTabla HT=new HiloTabla(true,true,Ventana.jt_Tablita,Ventana.jt_Procesando);
     public void setVentana(Ventana Ventana) {
         this.Ventana = Ventana;
     }
-
+public void  AgregarOrden (Orden O){
+    Ordenes.add(O);
+    HT.setOrden(O);
+}
     public Cajero() {
     }
 
